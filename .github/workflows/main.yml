@@ -74,20 +74,17 @@ jobs:
           EOF
           )
           DEPLOYMENT_CODE=$(cat ./curl_output.json | jq -r '.code')
+          DEPLOYMENT_MESSAGE=$(cat ./curl_output.json | jq -r '.message')
           
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "DEPLOYMENT_RESULT<<$EOF" >> $GITHUB_OUTPUT
           echo "${DEPLOYMENT_RESULT}" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
           echo "DEPLOYMENT_CODE=$DEPLOYMENT_CODE" >> $GITHUB_OUTPUT
-      - name: Echo the result
-        id: Echo
-        run: |
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
+          echo "DEPLOYMENT_MESSAGE=$DEPLOYMENT_MESSAGE" >> $GITHUB_OUTPUT
       - name: Check the result
         if: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}} != null
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}')
+              core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_MESSAGE}}')
