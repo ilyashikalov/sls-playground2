@@ -77,11 +77,13 @@ jobs:
           echo "text<<$EOF" >> $GITHUB_ENV
           echo "DeploymentResult=${DEPLOYMENT_RESULT}" >> $GITHUB_ENV
           echo "$EOF" >> $GITHUB_ENV
-
+      - name: Echo the result
+        id: Echo
+        run: |
+          echo ${{steps.Redeployment.outputs.DeploymentResult}}
       - name: Check the result
         if: ${{steps.Redeployment.outputs.DeploymentResult.code}} != null
         uses: actions/github-script@v3
         with:
           script: |
-              echo ${{steps.Redeployment.outputs.DeploymentResult}}
               core.setFailed('${{steps.Redeployment.outputs.DeploymentResult.message}}')
