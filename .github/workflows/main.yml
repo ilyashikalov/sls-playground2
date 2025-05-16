@@ -73,8 +73,11 @@ jobs:
           }
           EOF
           )
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "text<<$EOF" >> $GITHUB_ENV
+          echo "DeploymentResult=${DEPLOYMENT_RESULT}" >> $GITHUB_ENV
+          echo "$EOF" >> $GITHUB_ENV
 
-          echo "DeploymentResult=${DEPLOYMENT_RESULT}" >> $GITHUB_OUTPUT
       - name: Check the result
         uses: actions/github-script@v3
         with:
