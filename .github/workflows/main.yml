@@ -79,16 +79,16 @@ jobs:
           echo "DEPLOYMENT_RESULT<<$EOF" >> $GITHUB_OUTPUT
           echo "${DEPLOYMENT_RESULT}" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
-          echo "DEPLOYMENT_CODE=$(DEPLOYMENT_CODE)" >> $GITHUB_OUTPUT
+          echo "DEPLOYMENT_CODE=$DEPLOYMENT_CODE" >> $GITHUB_OUTPUT
       - name: Echo the result
         id: Echo
         run: |
           echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
           echo "${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
       - name: Check the result
-        if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}} != null
+        if: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}} != null
         uses: actions/github-script@v3
         with:
           script: |
               console.log(context)
-              core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_RESULT.message}}')
+              core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}')
