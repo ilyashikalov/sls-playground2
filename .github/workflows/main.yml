@@ -80,9 +80,9 @@ jobs:
       - name: Echo the result
         id: Echo
         run: |
-          echo "${{steps.Redeployment.outputs}}"
+          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}"
       - name: Check the result
-        if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT.code}} != null
+        if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}} != null
         uses: actions/github-script@v3
         with:
           script: |
