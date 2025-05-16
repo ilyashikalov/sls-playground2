@@ -71,8 +71,8 @@ jobs:
             "executionTimeout": "3s", 
             "content": '${FILE_BYTES}'
           }
-          EOF \
-          2>&1 ./curl_output.json)
+          EOF 
+          -o ./curl_output.json)
           DEPLOYMENT_CODE=$(cat ./curl_output.json | jq -r '.code')
           
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
