@@ -81,8 +81,8 @@ jobs:
         id: Echo
         run: |
           echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" | jq -r '.code'
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" | jq -r '.message'
+          $(echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}") | jq -r '.code'
+          # echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" | jq -r '.message'
       - name: Check the result
         if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}} != null
         uses: actions/github-script@v3
