@@ -60,7 +60,7 @@ jobs:
           FILE_BYTES=$(cat ./function.zip | base64)
                     
           DEPLOYMENT_RESULT=$(curl -X POST -sH "Authorization: Bearer ${{steps.IAMtoken.outputs.IAMTOKEN}}" https://serverless-functions.api.cloud.yandex.net/functions/v1/versions \
-            -d @- << EOF 
+             -o ./curl_output.json -d @- << EOF 
           { 
             "functionId": "${{env.FUNCTION_ID}}",
             "runtime": "${{env.FUNCTION_RUNTIME}}",
@@ -72,7 +72,7 @@ jobs:
             "content": '${FILE_BYTES}'
           }
           EOF 
-          -o ./curl_output.json)
+          )
           DEPLOYMENT_CODE=$(cat ./curl_output.json | jq -r '.code')
           
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
