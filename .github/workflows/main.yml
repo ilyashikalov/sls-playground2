@@ -83,7 +83,7 @@ jobs:
           echo "DEPLOYMENT_CODE=$DEPLOYMENT_CODE" >> $GITHUB_OUTPUT
           echo "DEPLOYMENT_MESSAGE=$DEPLOYMENT_MESSAGE" >> $GITHUB_OUTPUT
       - name: Check the result
-        if: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}} != null
+        if: ${{!steps.Redeployment.outputs.DEPLOYMENT_CODE}}
         uses: actions/github-script@v3
         with:
           script: |
