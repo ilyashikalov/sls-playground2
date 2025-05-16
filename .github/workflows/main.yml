@@ -80,12 +80,11 @@ jobs:
       - name: Echo the result
         id: Echo
         run: |
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}"
+          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT.code}}"
       - name: Check the result
         if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}} != null
         uses: actions/github-script@v3
         with:
           script: |
-              console.log(steps.Redeployment.outputs)
               console.log(context)
               core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_RESULT.message}}')
