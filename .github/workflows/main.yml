@@ -55,11 +55,11 @@ jobs:
 
       # Requesting list of functions via the API using an IAM token in Yandex Cloud
       - name: Trigger function redeployment step
-        id: redeployment
+        id: Redeployment
         run: |
           FILE_BYTES=$(cat ./function.zip | base64)
                     
-          curl -X POST -sH "Authorization: Bearer ${{steps.IAMtoken.outputs.IAMTOKEN}}" https://serverless-functions.api.cloud.yandex.net/functions/v1/versions \
+          DEPLOYMENT_RESULT = curl -X POST -sH "Authorization: Bearer ${{steps.IAMtoken.outputs.IAMTOKEN}}" https://serverless-functions.api.cloud.yandex.net/functions/v1/versions \
             -d @- << EOF 
           { 
             "functionId": "${{env.FUNCTION_ID}}",
@@ -72,3 +72,10 @@ jobs:
             "content": '${FILE_BYTES}'
           }
           EOF
+
+          echo "DeploymentResult=${DEPLOYMENT_RESULT}" >> $GITHUB_OUTPUT
+      - name: Check the result
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('${{steps.Redeployment.outputs.DeploymentResult}}')
