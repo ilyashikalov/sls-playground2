@@ -72,17 +72,19 @@ jobs:
             "content": '${FILE_BYTES}'
           }
           EOF
-          )
+          2>&1 ./curl_output.json)
+          DEPLOYMENT_CODE=$(cat ./curl_output.json | jq -r '.code')
+          
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
           echo "DEPLOYMENT_RESULT<<$EOF" >> $GITHUB_OUTPUT
           echo "${DEPLOYMENT_RESULT}" >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT
+          echo "DEPLOYMENT_CODE=$(DEPLOYMENT_CODE)" >> $GITHUB_OUTPUT
       - name: Echo the result
         id: Echo
         run: |
           echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" | jq -r '.code'
-          echo "${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" | jq -r '.message'
+          echo "${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
       - name: Check the result
         if: ${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}} != null
         uses: actions/github-script@v3
