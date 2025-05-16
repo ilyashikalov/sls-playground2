@@ -79,7 +79,8 @@ jobs:
           echo "$EOF" >> $GITHUB_ENV
 
       - name: Check the result
+        if: ${{steps.Redeployment.outputs.DeploymentResult.code}} != null
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('${{steps.Redeployment.outputs.DeploymentResult}}')
+              core.setFailed('${{steps.Redeployment.outputs.DeploymentResult.message}}')
