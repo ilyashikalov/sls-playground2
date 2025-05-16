@@ -71,7 +71,7 @@ jobs:
             "executionTimeout": "3s", 
             "content": '${FILE_BYTES}'
           }
-          EOF 
+          EOF
           )
           DEPLOYMENT_CODE=$(cat ./curl_output.json | jq -r '.code')
           
