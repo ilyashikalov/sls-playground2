@@ -13,7 +13,7 @@ env:
   FUNCTION_ID: d4eu1mlfscm16b7lags9
   FUNCTION_RUNTIME: nodejs18
   FUNCTION_ENTRYPOINT: index.handler
-  FUNCTION_MEMORY: 269484032
+  FUNCTION_MEMORY: 268435456
   
 jobs:
   function_version_deployment_job:
