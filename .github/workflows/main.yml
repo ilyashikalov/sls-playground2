@@ -88,7 +88,7 @@ jobs:
           echo "Result: ${{toJSON(steps.Redeployment.outputs)}}" 
           echo "Code: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
       - name: Check the result
-        if: ${{!steps.Redeployment.outputs.DEPLOYMENT_CODE}}
+        if: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}
         uses: actions/github-script@v3
         with:
           script: |
