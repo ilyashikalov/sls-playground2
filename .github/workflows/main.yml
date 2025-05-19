@@ -85,8 +85,8 @@ jobs:
       - name: Echo the result
         id: Echo
         run: |
-          echo "Result: \n\r${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
-          echo "Code: \r\n${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
+          echo "Result: ${{steps.Redeployment.outputs}}" 
+          echo "Code: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
       - name: Check the result
         if: ${{!steps.Redeployment.outputs.DEPLOYMENT_CODE}}
         uses: actions/github-script@v3
