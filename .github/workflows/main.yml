@@ -13,7 +13,7 @@ env:
   FUNCTION_ID: d4eu1mlfscm16b7lags9
   FUNCTION_RUNTIME: nodejs18
   FUNCTION_ENTRYPOINT: index.handler
-  FUNCTION_MEMORY: 268435455
+  FUNCTION_MEMORY: 268435456
   
 jobs:
   function_version_deployment_job:
@@ -86,7 +86,7 @@ jobs:
         id: Echo
         run: |
           echo "Result: ${{toJSON(steps.Redeployment.outputs)}}" 
-          echo "Code: ${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
+          echo "Code: ${{toJSON(steps.Redeployment.outputs.DEPLOYMENT_CODE)}}" 
       - name: Check the result
         if: ${{ ! steps.Redeployment.outputs.DEPLOYMENT_CODE}}
         uses: actions/github-script@v3
