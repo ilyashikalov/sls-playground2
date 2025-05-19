@@ -92,4 +92,5 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
+              console.log(steps.Redeployment.outputs.DEPLOYMENT_CODE)
               core.setFailed('${{steps.Redeployment.outputs.DEPLOYMENT_MESSAGE}}')
