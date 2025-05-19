@@ -82,6 +82,11 @@ jobs:
           echo "$EOF" >> $GITHUB_OUTPUT
           echo "DEPLOYMENT_CODE=$DEPLOYMENT_CODE" >> $GITHUB_OUTPUT
           echo "DEPLOYMENT_MESSAGE=$DEPLOYMENT_MESSAGE" >> $GITHUB_OUTPUT
+      - name: Echo the result
+        id: Echo
+        run: |
+          echo "Result: \n\r${{steps.Redeployment.outputs.DEPLOYMENT_RESULT}}" 
+          echo "Code: \r\n${{steps.Redeployment.outputs.DEPLOYMENT_CODE}}" 
       - name: Check the result
         if: ${{!steps.Redeployment.outputs.DEPLOYMENT_CODE}}
         uses: actions/github-script@v3
