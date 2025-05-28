@@ -1,0 +1,53 @@
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  FOLDER_ID: b1gpbamg8gs2uahuonc0
+  SA_ID: ajembo0u4edhicrigid1
+  FUNCTION_NAME: crop-image-test
+  FUNCTION_RUNTIME: nodejs18
+  FUNCTION_ENTRYPOINT: index.handler
+  FUNCTION_MEMORY: 256Mb
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install dependencies
+        run: npm ci
+      - run: npm run build --if-present
+      # Опционально можно запустить прогон тестов, если они есть
+      # - run: npm run test
+      - name: Deploy Function
+        id: sls-func
+        uses: yc-actions/yc-sls-function@v1.0.1
+        with:
+          yc-sa-json-credentials: ${{secrets.YC_SA_JSON_CREDENTIALS}}
+          folder-id: ${{env.FOLDER_ID}}
+          function-name: 'github-deploy'
+          runtime: ${{env.FUNCTION_RUNTIME}}
+          memory: ${{env.MEMORY}}
+          entrypoint: ${{env.FUNCTION_ENTRYPOINT}}
+          environment: |
+            DEBUG=True
+            FOO=bar
+          include: |
+            ./dist
+            package.json
+          exclude: |
+            **/*.ts
