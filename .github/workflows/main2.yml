@@ -47,7 +47,7 @@ jobs:
         with:
           yc-iam-token: ${{ steps.get-iam-token.outputs.token }}
           folder-id: ${{env.FOLDER_ID}}
-          function-name: 'github-deploy'
+          function-name: ${{env.FUNCTION_NAME}}
           runtime: ${{env.FUNCTION_RUNTIME}}
           memory: ${{env.MEMORY}}
           entrypoint: ${{env.FUNCTION_ENTRYPOINT}}
