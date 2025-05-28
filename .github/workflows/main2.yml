@@ -43,7 +43,7 @@ jobs:
           yc-sa-id: ${{env.SA_ID}}
       - name: Deploy Function
         id: sls-func
-        uses: yc-actions/yc-sls-function@v1.0.1
+        uses: yc-actions/yc-sls-function@v3.1.0
         with:
           yc-iam-token: ${{ steps.get-iam-token.outputs.token }}
           folder-id: ${{env.FOLDER_ID}}
