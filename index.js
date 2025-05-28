@@ -10,7 +10,7 @@ async function cropImage(imageBase64, width, height) {
             .resize(width, height) // Изменение размеров
             .toBuffer(); // Преобразуем обратно в буфер
 
-        // Кодируем результат в base64
+        // encode result into base64
         const croppedImageBase64 = croppedBuffer.toString('base64');
         return croppedImageBase64;
     } catch (error) {
