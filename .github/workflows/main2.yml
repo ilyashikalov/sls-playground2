@@ -33,11 +33,19 @@ jobs:
       - run: npm run build --if-present
       # Опционально можно запустить прогон тестов, если они есть
       # - run: npm run test
+      
+      # Теперь мы можем используя ID сервисного аккаунта, который мы создали ранее, выпустить IAM токен для него,
+      # путем обмена GitHub токена на IAM токен.
+      - name: Get Yandex Cloud IAM token
+        id: get-iam-token
+        uses: docker://ghcr.io/yc-actions/yc-iam-token-fed:1.0.0
+        with:
+          yc-sa-id: ${{env.SA_ID}}
       - name: Deploy Function
         id: sls-func
         uses: yc-actions/yc-sls-function@v1.0.1
         with:
-          yc-sa-json-credentials: ${{secrets.YC_SA_JSON_CREDENTIALS}}
+          yc-iam-token: ${{ steps.get-iam-token.outputs.token }}
           folder-id: ${{env.FOLDER_ID}}
           function-name: 'github-deploy'
           runtime: ${{env.FUNCTION_RUNTIME}}
