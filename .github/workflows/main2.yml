@@ -12,7 +12,7 @@ on:
 
 env:
   FOLDER_ID: b1gpbamg8gs2uahuonc0
-  SA_ID: ajembo0u4edhicrigid1
+  SA_ID: aje9gng5ufshjitn0o2j
   FUNCTION_NAME: crop-image-test
   FUNCTION_RUNTIME: nodejs18
   FUNCTION_ENTRYPOINT: index.handler
