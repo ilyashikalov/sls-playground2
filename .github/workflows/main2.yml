@@ -33,6 +33,6 @@ jobs:
           runtime: ${{env.FUNCTION_RUNTIME}}
           memory: ${{env.MEMORY}}
           entrypoint: ${{env.FUNCTION_ENTRYPOINT}}
-          # include: |
-          #   .**/*.json
-          #   ./*.js
+          include: |
+            **/*.json
+            **/*.js
