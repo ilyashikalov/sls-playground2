@@ -36,3 +36,5 @@ jobs:
           include: |
             **/*.json
             **/*.js
+          tags: |
+            ci
